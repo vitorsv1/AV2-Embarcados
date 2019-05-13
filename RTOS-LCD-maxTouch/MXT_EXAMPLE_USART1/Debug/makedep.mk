@@ -10,6 +10,8 @@ src\ASF\common\services\delay\sam\cycle_counter.c
 
 src\ASF\common\services\serial\usart_serial.c
 
+src\ASF\common\services\sleepmgr\sam\sleepmgr.c
+
 src\ASF\common\services\spi\sam_spi\spi_master.c
 
 src\ASF\common\utils\interrupt\interrupt_sam_nvic.c
@@ -21,6 +23,8 @@ src\ASF\common\utils\stdio\write.c
 src\ASF\sam\boards\same70_xplained\init.c
 
 src\ASF\sam\components\display\ili9488\ili9488.c
+
+src\ASF\sam\drivers\afec\afec.c
 
 src\ASF\sam\drivers\mpu\mpu.c
 
