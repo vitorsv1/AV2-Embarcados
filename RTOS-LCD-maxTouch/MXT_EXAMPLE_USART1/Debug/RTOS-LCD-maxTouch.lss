@@ -9,39 +9,39 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   2 .relocate     000009c0  20400000  00451e78  00070000  2**3
                   CONTENTS, ALLOC, LOAD, CODE
-  3 .bss          0000bed8  204009c0  00452838  000709c0  2**2
+  3 .bss          0000bee0  204009c0  00452838  000709c0  2**2
                   ALLOC
-  4 .stack        00002000  2040c898  0045e710  000709c0  2**0
+  4 .stack        00002000  2040c8a0  0045e718  000709c0  2**0
                   ALLOC
-  5 .heap         00000200  2040e898  00460710  000709c0  2**0
+  5 .heap         00000200  2040e8a0  00460718  000709c0  2**0
                   ALLOC
   6 .ARM.attributes 0000002e  00000000  00000000  000709c0  2**0
                   CONTENTS, READONLY
   7 .comment      00000059  00000000  00000000  000709ee  2**0
                   CONTENTS, READONLY
-  8 .debug_info   00029ca5  00000000  00000000  00070a47  2**0
+  8 .debug_info   0002a1b7  00000000  00000000  00070a47  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_abbrev 000056ef  00000000  00000000  0009a6ec  2**0
+  9 .debug_abbrev 0000571c  00000000  00000000  0009abfe  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000dc3a  00000000  00000000  0009fddb  2**0
+ 10 .debug_loc    0000dd21  00000000  00000000  000a031a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 000012a8  00000000  00000000  000ada15  2**0
+ 11 .debug_aranges 000012b8  00000000  00000000  000ae03b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00001550  00000000  00000000  000aecbd  2**0
+ 12 .debug_ranges 00001590  00000000  00000000  000af2f3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  00025fb5  00000000  00000000  000b020d  2**0
+ 13 .debug_macro  00025fc8  00000000  00000000  000b0883  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   00015fdb  00000000  00000000  000d61c2  2**0
+ 14 .debug_line   0001605a  00000000  00000000  000d684b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    0009e859  00000000  00000000  000ec19d  2**0
+ 15 .debug_str    0009e919  00000000  00000000  000ec8a5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_frame  00003bc4  00000000  00000000  0018a9f8  2**2
+ 16 .debug_frame  00003c0c  00000000  00000000  0018b1c0  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00400000 <exception_table>:
-  400000:	98 e8 40 20 bd 1b 40 00 bb 1b 40 00 bb 1b 40 00     ..@ ..@...@...@.
+  400000:	a0 e8 40 20 bd 1b 40 00 bb 1b 40 00 bb 1b 40 00     ..@ ..@...@...@.
   400010:	bb 1b 40 00 bb 1b 40 00 bb 1b 40 00 00 00 00 00     ..@...@...@.....
 	...
   40002c:	95 1f 40 00 bb 1b 40 00 00 00 00 00 35 20 40 00     ..@...@.....5 @.
@@ -4798,7 +4798,7 @@ static inline void cpu_irq_restore(irqflags_t flags)
   401c58:	20400000 	.word	0x20400000
   401c5c:	00451e78 	.word	0x00451e78
   401c60:	204009c0 	.word	0x204009c0
-  401c64:	2040c898 	.word	0x2040c898
+  401c64:	2040c8a0 	.word	0x2040c8a0
   401c68:	204009c0 	.word	0x204009c0
   401c6c:	e000ed00 	.word	0xe000ed00
   401c70:	00400000 	.word	0x00400000
@@ -5113,7 +5113,7 @@ void system_init_flash( uint32_t ul_clk )
   401e46:	bf00      	nop
   401e48:	20400e10 	.word	0x20400e10
   401e4c:	2045fffc 	.word	0x2045fffc
-  401e50:	2040ea98 	.word	0x2040ea98
+  401e50:	2040eaa0 	.word	0x2040eaa0
 
 00401e54 <_close>:
 }
@@ -9634,19 +9634,18 @@ void draw_ar(void){
   403d20:	4806      	ldr	r0, [pc, #24]	; (403d3c <draw_ar+0x20>)
   403d22:	4b07      	ldr	r3, [pc, #28]	; (403d40 <draw_ar+0x24>)
   403d24:	4798      	blx	r3
-	ili9488_draw_pixmap(0,200,ar.width,ar.height+2,ar.data);
+	ili9488_draw_pixmap(0,300,ar.width,ar.height+2,ar.data);
   403d26:	4b07      	ldr	r3, [pc, #28]	; (403d44 <draw_ar+0x28>)
   403d28:	9300      	str	r3, [sp, #0]
   403d2a:	2348      	movs	r3, #72	; 0x48
   403d2c:	2258      	movs	r2, #88	; 0x58
-  403d2e:	21c8      	movs	r1, #200	; 0xc8
-  403d30:	2000      	movs	r0, #0
-  403d32:	4c05      	ldr	r4, [pc, #20]	; (403d48 <draw_ar+0x2c>)
-  403d34:	47a0      	blx	r4
+  403d2e:	f44f 7196 	mov.w	r1, #300	; 0x12c
+  403d32:	2000      	movs	r0, #0
+  403d34:	4c04      	ldr	r4, [pc, #16]	; (403d48 <draw_ar+0x2c>)
+  403d36:	47a0      	blx	r4
 }
-  403d36:	b002      	add	sp, #8
-  403d38:	bd10      	pop	{r4, pc}
-  403d3a:	bf00      	nop
+  403d38:	b002      	add	sp, #8
+  403d3a:	bd10      	pop	{r4, pc}
   403d3c:	00fcfcfc 	.word	0x00fcfcfc
   403d40:	00400dbd 	.word	0x00400dbd
   403d44:	00407964 	.word	0x00407964
@@ -9766,9 +9765,9 @@ void font_draw_text(tFont *font, const char *text, int x, int y, int spacing) {
   403e00:	004010c9 	.word	0x004010c9
 
 00403e04 <task_lcd>:
-      }
-     vTaskDelay(100);
-	}
+void AFEC_callback_t(void){
+	int result = afec_channel_get_value(AFEC0,AFEC_CHANNEL_TEMP_SENSOR);
+	xQueueSendFromISR( xQueue1, &result, NULL );
 }
 
 void task_lcd(void){
@@ -9833,55 +9832,54 @@ void task_lcd(void){
   403e58:	4628      	mov	r0, r5
   403e5a:	47a0      	blx	r4
    
-   font_draw_text(&digital52, "100%", ar.width + 5, 205, 1);
+   font_draw_text(&digital52, "100%", ar.width + 5, 305, 1);
   403e5c:	9600      	str	r6, [sp, #0]
-  403e5e:	23cd      	movs	r3, #205	; 0xcd
-  403e60:	225d      	movs	r2, #93	; 0x5d
-  403e62:	491c      	ldr	r1, [pc, #112]	; (403ed4 <task_lcd+0xd0>)
-  403e64:	4628      	mov	r0, r5
-  403e66:	47a0      	blx	r4
+  403e5e:	f240 1331 	movw	r3, #305	; 0x131
+  403e62:	225d      	movs	r2, #93	; 0x5d
+  403e64:	491b      	ldr	r1, [pc, #108]	; (403ed4 <task_lcd+0xd0>)
+  403e66:	4628      	mov	r0, r5
+  403e68:	47a0      	blx	r4
    
    // Linha
    ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
-  403e68:	2000      	movs	r0, #0
-  403e6a:	4b1b      	ldr	r3, [pc, #108]	; (403ed8 <task_lcd+0xd4>)
-  403e6c:	4798      	blx	r3
+  403e6a:	2000      	movs	r0, #0
+  403e6c:	4b1a      	ldr	r3, [pc, #104]	; (403ed8 <task_lcd+0xd4>)
+  403e6e:	4798      	blx	r3
    ili9488_draw_filled_rectangle(0,80,ILI9488_LCD_WIDTH-1,82);
-  403e6e:	2352      	movs	r3, #82	; 0x52
-  403e70:	f240 123f 	movw	r2, #319	; 0x13f
-  403e74:	2150      	movs	r1, #80	; 0x50
-  403e76:	2000      	movs	r0, #0
-  403e78:	4c18      	ldr	r4, [pc, #96]	; (403edc <task_lcd+0xd8>)
-  403e7a:	47a0      	blx	r4
+  403e70:	2352      	movs	r3, #82	; 0x52
+  403e72:	f240 123f 	movw	r2, #319	; 0x13f
+  403e76:	2150      	movs	r1, #80	; 0x50
+  403e78:	2000      	movs	r0, #0
+  403e7a:	4c18      	ldr	r4, [pc, #96]	; (403edc <task_lcd+0xd8>)
+  403e7c:	47a0      	blx	r4
   
   touchData touch;
     
   while (true) {  
      if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-  403e7c:	4d09      	ldr	r5, [pc, #36]	; (403ea4 <task_lcd+0xa0>)
-  403e7e:	4c18      	ldr	r4, [pc, #96]	; (403ee0 <task_lcd+0xdc>)
+  403e7e:	4d09      	ldr	r5, [pc, #36]	; (403ea4 <task_lcd+0xa0>)
+  403e80:	4c17      	ldr	r4, [pc, #92]	; (403ee0 <task_lcd+0xdc>)
        update_screen(touch.x, touch.y);
        printf("x:%d y:%d\n", touch.x, touch.y);
-  403e80:	4e18      	ldr	r6, [pc, #96]	; (403ee4 <task_lcd+0xe0>)
+  403e82:	4e18      	ldr	r6, [pc, #96]	; (403ee4 <task_lcd+0xe0>)
      if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-  403e82:	2300      	movs	r3, #0
-  403e84:	f44f 72fa 	mov.w	r2, #500	; 0x1f4
-  403e88:	a902      	add	r1, sp, #8
-  403e8a:	6828      	ldr	r0, [r5, #0]
-  403e8c:	47a0      	blx	r4
-  403e8e:	2800      	cmp	r0, #0
-  403e90:	d0f7      	beq.n	403e82 <task_lcd+0x7e>
+  403e84:	2300      	movs	r3, #0
+  403e86:	f44f 72fa 	mov.w	r2, #500	; 0x1f4
+  403e8a:	a902      	add	r1, sp, #8
+  403e8c:	6828      	ldr	r0, [r5, #0]
+  403e8e:	47a0      	blx	r4
+  403e90:	2800      	cmp	r0, #0
+  403e92:	d0f7      	beq.n	403e84 <task_lcd+0x80>
        printf("x:%d y:%d\n", touch.x, touch.y);
-  403e92:	9a03      	ldr	r2, [sp, #12]
-  403e94:	9902      	ldr	r1, [sp, #8]
-  403e96:	4630      	mov	r0, r6
-  403e98:	4b13      	ldr	r3, [pc, #76]	; (403ee8 <task_lcd+0xe4>)
-  403e9a:	4798      	blx	r3
-  403e9c:	e7f1      	b.n	403e82 <task_lcd+0x7e>
-  403e9e:	bf00      	nop
+  403e94:	9a03      	ldr	r2, [sp, #12]
+  403e96:	9902      	ldr	r1, [sp, #8]
+  403e98:	4630      	mov	r0, r6
+  403e9a:	4b13      	ldr	r3, [pc, #76]	; (403ee8 <task_lcd+0xe4>)
+  403e9c:	4798      	blx	r3
+  403e9e:	e7f1      	b.n	403e84 <task_lcd+0x80>
   403ea0:	00402511 	.word	0x00402511
-  403ea4:	2040c86c 	.word	0x2040c86c
-  403ea8:	2040c85c 	.word	0x2040c85c
+  403ea4:	2040c874 	.word	0x2040c874
+  403ea8:	2040c860 	.word	0x2040c860
   403eac:	00fcfcfc 	.word	0x00fcfcfc
   403eb0:	00400e49 	.word	0x00400e49
   403eb4:	00403d4d 	.word	0x00403d4d
@@ -10171,7 +10169,7 @@ static inline uint32_t twihs_master_setup(twihs_master_t p_twihs,
   4040d4:	004004ad 	.word	0x004004ad
   4040d8:	0040056d 	.word	0x0040056d
   4040dc:	00403eed 	.word	0x00403eed
-  4040e0:	2040c86c 	.word	0x2040c86c
+  4040e0:	2040c874 	.word	0x2040c874
   4040e4:	00403099 	.word	0x00403099
   4040e8:	0040258d 	.word	0x0040258d
 
@@ -11072,13 +11070,13 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   4049ac:	4801      	ldr	r0, [pc, #4]	; (4049b4 <__malloc_lock+0x8>)
   4049ae:	f001 bd6b 	b.w	406488 <__retarget_lock_acquire_recursive>
   4049b2:	bf00      	nop
-  4049b4:	2040c880 	.word	0x2040c880
+  4049b4:	2040c888 	.word	0x2040c888
 
 004049b8 <__malloc_unlock>:
   4049b8:	4801      	ldr	r0, [pc, #4]	; (4049c0 <__malloc_unlock+0x8>)
   4049ba:	f001 bd67 	b.w	40648c <__retarget_lock_release_recursive>
   4049be:	bf00      	nop
-  4049c0:	2040c880 	.word	0x2040c880
+  4049c0:	2040c888 	.word	0x2040c888
 
 004049c4 <_sbrk_r>:
   4049c4:	b538      	push	{r3, r4, r5, lr}
@@ -11096,7 +11094,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   4049de:	d0fb      	beq.n	4049d8 <_sbrk_r+0x14>
   4049e0:	602b      	str	r3, [r5, #0]
   4049e2:	bd38      	pop	{r3, r4, r5, pc}
-  4049e4:	2040c894 	.word	0x2040c894
+  4049e4:	2040c89c 	.word	0x2040c89c
 
 004049e8 <setbuf>:
   4049e8:	2900      	cmp	r1, #0
@@ -12994,20 +12992,20 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   405d4e:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
   405d52:	f000 bb9b 	b.w	40648c <__retarget_lock_release_recursive>
   405d56:	bf00      	nop
-  405d58:	2040c87c 	.word	0x2040c87c
+  405d58:	2040c884 	.word	0x2040c884
   405d5c:	00405cad 	.word	0x00405cad
 
 00405d60 <__sfp_lock_acquire>:
   405d60:	4801      	ldr	r0, [pc, #4]	; (405d68 <__sfp_lock_acquire+0x8>)
   405d62:	f000 bb91 	b.w	406488 <__retarget_lock_acquire_recursive>
   405d66:	bf00      	nop
-  405d68:	2040c890 	.word	0x2040c890
+  405d68:	2040c898 	.word	0x2040c898
 
 00405d6c <__sfp_lock_release>:
   405d6c:	4801      	ldr	r0, [pc, #4]	; (405d74 <__sfp_lock_release+0x8>)
   405d6e:	f000 bb8d 	b.w	40648c <__retarget_lock_release_recursive>
   405d72:	bf00      	nop
-  405d74:	2040c890 	.word	0x2040c890
+  405d74:	2040c898 	.word	0x2040c898
 
 00405d78 <__libc_fini_array>:
   405d78:	b538      	push	{r3, r4, r5, lr}
@@ -14556,7 +14554,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406c2e:	6033      	str	r3, [r6, #0]
   406c30:	bd70      	pop	{r4, r5, r6, pc}
   406c32:	bf00      	nop
-  406c34:	2040c894 	.word	0x2040c894
+  406c34:	2040c89c 	.word	0x2040c89c
 
 00406c38 <__register_exitproc>:
   406c38:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -14644,7 +14642,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406d16:	d0fb      	beq.n	406d10 <_close_r+0x14>
   406d18:	602b      	str	r3, [r5, #0]
   406d1a:	bd38      	pop	{r3, r4, r5, pc}
-  406d1c:	2040c894 	.word	0x2040c894
+  406d1c:	2040c89c 	.word	0x2040c89c
 
 00406d20 <_fclose_r>:
   406d20:	b570      	push	{r4, r5, r6, lr}
@@ -14748,7 +14746,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406e02:	d0fb      	beq.n	406dfc <_fstat_r+0x18>
   406e04:	602b      	str	r3, [r5, #0]
   406e06:	bd38      	pop	{r3, r4, r5, pc}
-  406e08:	2040c894 	.word	0x2040c894
+  406e08:	2040c89c 	.word	0x2040c89c
 
 00406e0c <_isatty_r>:
   406e0c:	b538      	push	{r3, r4, r5, lr}
@@ -14766,7 +14764,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406e26:	d0fb      	beq.n	406e20 <_isatty_r+0x14>
   406e28:	602b      	str	r3, [r5, #0]
   406e2a:	bd38      	pop	{r3, r4, r5, pc}
-  406e2c:	2040c894 	.word	0x2040c894
+  406e2c:	2040c89c 	.word	0x2040c89c
 
 00406e30 <_lseek_r>:
   406e30:	b570      	push	{r4, r5, r6, lr}
@@ -14788,7 +14786,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406e52:	6033      	str	r3, [r6, #0]
   406e54:	bd70      	pop	{r4, r5, r6, pc}
   406e56:	bf00      	nop
-  406e58:	2040c894 	.word	0x2040c894
+  406e58:	2040c89c 	.word	0x2040c89c
 
 00406e5c <_read_r>:
   406e5c:	b570      	push	{r4, r5, r6, lr}
@@ -14810,7 +14808,7 @@ static inline void stdio_serial_init(volatile void *usart, const usart_serial_op
   406e7e:	6033      	str	r3, [r6, #0]
   406e80:	bd70      	pop	{r4, r5, r6, pc}
   406e82:	bf00      	nop
-  406e84:	2040c894 	.word	0x2040c894
+  406e84:	2040c89c 	.word	0x2040c89c
 
 00406e88 <__aeabi_uldivmod>:
   406e88:	b953      	cbnz	r3, 406ea0 <__aeabi_uldivmod+0x18>
@@ -34685,7 +34683,7 @@ void portable_delay_cycles(unsigned long n)
 2040084c:	0000 0002                                   ....
 
 20400850 <__atexit_recursive_mutex>:
-20400850:	c870 2040                                   p.@ 
+20400850:	c878 2040                                   x.@ 
 
 20400854 <__global_locale>:
 20400854:	0043 0000 0000 0000 0000 0000 0000 0000     C...............
