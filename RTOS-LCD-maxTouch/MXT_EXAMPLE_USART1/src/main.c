@@ -129,7 +129,7 @@ const uint32_t BUTTON_Y = ILI9488_LCD_HEIGHT/2;
 volatile bool g_is_conversion_done = false;
 
 /** The conversion data value */
-volatile uint32_t g_ul_value = 0;
+volatile uint32_t g_ul_value = 20;
 
 /* Canal do sensor de temperatura */
 #define AFEC_CHANNEL_TEMP_SENSOR 11
@@ -338,11 +338,11 @@ void draw_termo(void) {
 	ili9488_draw_pixmap(0,90,termometro.width, termometro.height+2, termometro.data);
 }
 
-void draw_temp(int32_t temperatura){
-	char buffer[600];
-	sprintf(buffer, "%d", temperatura);
+void draw_temp(uint32_t temperatura){
+	char buffer[200];
+	sprintf(buffer, "%3d", temperatura);
 	font_draw_text(&digital52, buffer, termometro.width + 5, 95, 1);
-	font_draw_text(&digital52, "Celsius", termometro.width + 56, 95, 1);
+	//font_draw_text(&digital52, "Celsius", termometro.width + 56, 95, 1);
 }
 
 void draw_button(uint32_t clicked) {
@@ -423,11 +423,8 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 /* tasks                                                                */
 /************************************************************************/
 void AFEC_callback_t(void){
-	//int result = afec_channel_get_value(AFEC0,AFEC_CHANNEL_TEMP_SENSOR);
-	//xQueueSendFromISR( xQueue1, &result, NULL );
-	printf("AFEC CALLBACK");
 	g_ul_value = afec_channel_get_value(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
-	g_is_conversion_done = true;
+	xQueueSendFromISR( xQueueTem, &g_ul_value, 0);
 }
 
 static void config_ADC_TEMP(void){
@@ -450,7 +447,7 @@ static void config_ADC_TEMP(void){
 	afec_set_trigger(AFEC0, AFEC_TRIG_SW);
 
 	/* configura call back */
-	afec_set_callback(AFEC0, AFEC_INTERRUPT_EOC_11,	AFEC_callback_t, 1);
+	afec_set_callback(AFEC0, AFEC_INTERRUPT_EOC_11,	AFEC_callback_t, 4);
 
 	/*** Configuracao específica do canal AFEC ***/
 	struct afec_ch_config afec_ch_cfg;
@@ -512,30 +509,20 @@ void task_mxt(void){
 
 void task_afec(void){
 	
-	xQueueTem = xQueueCreate( 10, sizeof( int32_t ) );
-	int32_t adc,temp;
-	
 	config_ADC_TEMP();
-	
-	afec_start_software_conversion(AFEC0);
-	
+	afec_channel_enable(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
+		
 	for (;;){
-		
-		temp = convert_adc_to_temp(g_ul_value);
-		printf("Temp: %d \r\n", temp);
 		afec_start_software_conversion(AFEC0);
-		xQueueSend(xQueueTem, &temp, 0);
-			
-		vTaskDelay(1000/portTICK_PERIOD_MS);
-		
+		vTaskDelay(4000/ portTICK_PERIOD_MS);
 	}
 }
 
 void task_lcd(void){
   xQueueTouch = xQueueCreate( 10, sizeof( touchData ) );
-  xQueueTem =	xQueueCreate( 10, sizeof( int32_t ) );
+  xQueueTem =	xQueueCreate( 10, sizeof( uint32_t ) );
   
-  int32_t t;
+  uint32_t t;
   touchData touch;
   
   configure_lcd();
@@ -549,7 +536,7 @@ void task_lcd(void){
    // Escreve HH:MM no LCD
    font_draw_text(&digital52, "17:40", 0, 0, 1);
    
-   //font_draw_text(&digital52, "25", termometro.width + 5, 95, 1);
+   font_draw_text(&digital52, "25", termometro.width + 5, 95, 1);
    
    font_draw_text(&digital52, "100%", ar.width + 5, 305, 1);
    
@@ -560,13 +547,10 @@ void task_lcd(void){
   
     
   while (true) {  
-     if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-       //update_screen(touch.x, touch.y);
-       printf("\nx:%d y:%d\n", touch.x, touch.y);
-     }
-	 if (xQueueReceive( xQueueTem, &(t), ( TickType_t )  4500 / portTICK_PERIOD_MS)) {
-		 draw_temp(t);
-		 printf("\nRecebeu Temp -> %d", t);
+
+	 if (xQueueReceive( xQueueTem, &t, ( TickType_t )  500 / portTICK_PERIOD_MS)) {
+		 //printf("\nRecebeu Temp -> %d", t);
+		 draw_temp(convert_adc_to_temp(t));
 	 }     
   }	 
 }
