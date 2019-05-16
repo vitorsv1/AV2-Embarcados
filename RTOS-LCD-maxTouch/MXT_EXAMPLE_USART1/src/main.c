@@ -145,6 +145,8 @@ QueueHandle_t xQueuePWM;
 
 SemaphoreHandle_t xSemaphore;
 SemaphoreHandle_t xSemaphore2;
+SemaphoreHandle_t xSemaphore3;
+
 
 #define PIO_PWM_0 PIOA
 #define ID_PIO_PWM_0 ID_PIOA
@@ -237,6 +239,63 @@ static void configure_lcd(void){
 
 	/* Initialize LCD */
 	ili9488_init(&g_ili9488_display_opt);
+}
+
+void RTC_init(){
+	/* Configura o PMC */
+	pmc_enable_periph_clk(ID_RTC);
+
+	/* Default RTC configuration, 24-hour mode */
+	rtc_set_hour_mode(RTC, 0);
+
+	/* Configura data e hora manualmente */
+	rtc_set_date(RTC, 0, 0, 0, 0);
+	rtc_set_time(RTC, 0, 0, 0);
+
+	/* Configure RTC interrupts */
+	NVIC_DisableIRQ(RTC_IRQn);
+	NVIC_ClearPendingIRQ(RTC_IRQn);
+	NVIC_SetPriority(RTC_IRQn, 5);
+	NVIC_EnableIRQ(RTC_IRQn);
+
+	/* Ativa interrupcao via alarme */
+	rtc_enable_interrupt(RTC, RTC_IER_ALREN);
+
+	rtc_set_date_alarm(RTC, 1, 0, 1, 0);
+	rtc_set_time_alarm(RTC, 1, 0, 1, 0, 1, 1);
+
+}
+
+void RTC_Handler(void)
+{
+	uint32_t ul_status = rtc_get_status(RTC);
+
+	if ((ul_status & RTC_SR_SEC) == RTC_SR_SEC) {
+		rtc_clear_status(RTC, RTC_SCCR_SECCLR);
+	}
+
+	if ((ul_status & RTC_SR_ALARM) == RTC_SR_ALARM) {
+		rtc_clear_status(RTC, RTC_SCCR_ALRCLR);
+		rtc_set_date_alarm(RTC, 1, 0, 1, 0);
+		
+		int hora, min, sec;
+		
+		rtc_get_time(RTC, &hora, &min, &sec);
+		
+		if (sec >= 59) {
+			if (min >= 59)	rtc_set_time_alarm(RTC, 1, 0, hora+1, 0, 1, 0);
+			else rtc_set_time_alarm(RTC, 1, hora, 1, min+1, 1, 0);
+			} 
+		else rtc_set_time_alarm(RTC, 1, hora, 1, min, 1, sec+1);
+		
+		xSemaphoreGiveFromISR(xSemaphore3, 0);
+	}
+	
+	rtc_clear_status(RTC, RTC_SCCR_ACKCLR);
+	rtc_clear_status(RTC, RTC_SCCR_TIMCLR);
+	rtc_clear_status(RTC, RTC_SCCR_CALCLR);
+	rtc_clear_status(RTC, RTC_SCCR_TDERRCLR);
+	
 }
 
 /**
@@ -354,6 +413,12 @@ void draw_sonec(void){
 	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_WHITE));
 	ili9488_draw_filled_rectangle(0,84,ILI9488_LCD_WIDTH,ILI9488_LCD_HEIGHT);
 	ili9488_draw_pixmap(ILI9488_LCD_WIDTH-(soneca.width+1),0,soneca.width, soneca.height+2, soneca.data);
+}
+
+void draw_tempo(int32_t seg){
+	char buffer[10];
+	sprintf(buffer,"%02d:%02d", seg/3600, (seg%3600)/60);
+	font_draw_text(&digital52, buffer, 2, 2, 1);
 }
 
 void draw_ar(void){
@@ -614,26 +679,25 @@ void task_lcd(void){
 	
 	xSemaphore = xSemaphoreCreateBinary();
 	xSemaphore2 = xSemaphoreCreateBinary();
+	xSemaphore3 = xSemaphoreCreateBinary();
 	
 	
 	uint32_t t = 25;
 	int32_t pot = 0;
 	int32_t d_cicle = 0;
-	
+	int32_t segundos = 12*3600 + 42*60;
 	
 	configure_lcd();
 	
 	io_init();
+	RTC_init();
 	
 	draw_screen();
 	draw_sonec();
 	draw_termo();
 	draw_ar();
 	
-	// Escreve HH:MM no LCD
-	font_draw_text(&digital52, "17:40", 0, 0, 1);
-	
-	
+		
 	// Linha
 	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
 	ili9488_draw_filled_rectangle(0,80,ILI9488_LCD_WIDTH-1,82);
@@ -649,7 +713,7 @@ void task_lcd(void){
 			draw_temp(t);
 			
 			
-			printf("\n %d", pot);
+			//printf("\n %d", pot);
 			
 			d_cicle = pot;
 			
@@ -657,20 +721,22 @@ void task_lcd(void){
 			
 			xQueueSend(xQueuePWM, &d_cicle,0);
 		}
-		if (xSemaphoreTake(xSemaphore2, ( TickType_t )  100 / portTICK_PERIOD_MS)) {
+		if (xSemaphoreTake(xSemaphore2, ( TickType_t )  10 / portTICK_PERIOD_MS)) {
 			pot += 5;
 			if (pot >= 100) pot = 100;
 			
 			draw_potencia(pot);
 		}
-		if (xSemaphoreTake(xSemaphore, ( TickType_t )  100 / portTICK_PERIOD_MS)) {
+		if (xSemaphoreTake(xSemaphore, ( TickType_t )  10 / portTICK_PERIOD_MS)) {
 			pot -= 5;
 			if (pot < 0) pot = 0;
 			draw_potencia(pot);
 		}
-		
-	
-
+		if (xSemaphoreTake(xSemaphore3, (TickType_t) 10 / portTICK_PERIOD_MS)){
+			segundos += 1;
+			printf("\n%d", segundos);	
+			draw_tempo(segundos);
+		}
 	
 	}
 }
@@ -695,8 +761,7 @@ void task_pwm(void){
 /* main                                                                 */
 /************************************************************************/
 
-int main(void)
-{
+int main(void){
 	/* Initialize the USART configuration struct */
 	const usart_serial_options_t usart_serial_options = {
 		.baudrate     = USART_SERIAL_EXAMPLE_BAUDRATE,
