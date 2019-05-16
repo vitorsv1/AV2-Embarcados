@@ -1,88 +1,88 @@
 /**
- * \file
- *
- * \brief Example of usage of the maXTouch component with USART
- *
- * This example shows how to receive touch data from a maXTouch device
- * using the maXTouch component, and display them in a terminal window by using
- * the USART driver.
- *
- * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
- *
- * \asf_license_start
- *
- * \page License
- *
- * Subject to your compliance with these terms, you may use Microchip
- * software and any derivatives exclusively with Microchip products.
- * It is your responsibility to comply with third party license terms applicable
- * to your use of third party software (including open source software) that
- * may accompany Microchip software.
- *
- * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
- * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
- * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
- * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
- * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
- * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
- * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
- * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
- * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
- * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
- * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
- *
- * \asf_license_stop
- *
- */
+* \file
+*
+* \brief Example of usage of the maXTouch component with USART
+*
+* This example shows how to receive touch data from a maXTouch device
+* using the maXTouch component, and display them in a terminal window by using
+* the USART driver.
+*
+* Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
+*
+* \asf_license_start
+*
+* \page License
+*
+* Subject to your compliance with these terms, you may use Microchip
+* software and any derivatives exclusively with Microchip products.
+* It is your responsibility to comply with third party license terms applicable
+* to your use of third party software (including open source software) that
+* may accompany Microchip software.
+*
+* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+* WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+* INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+* AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+* LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+* LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+* SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+* POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+* ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+* RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+*
+* \asf_license_stop
+*
+*/
 
 /**
- * \mainpage
- *
- * \section intro Introduction
- * This simple example reads data from the maXTouch device and sends it over
- * USART as ASCII formatted text.
- *
- * \section files Main files:
- * - example_usart.c: maXTouch component USART example file
- * - conf_mxt.h: configuration of the maXTouch component
- * - conf_board.h: configuration of board
- * - conf_clock.h: configuration of system clock
- * - conf_example.h: configuration of example
- * - conf_sleepmgr.h: configuration of sleep manager
- * - conf_twim.h: configuration of TWI driver
- * - conf_usart_serial.h: configuration of USART driver
- *
- * \section apiinfo maXTouch low level component API
- * The maXTouch component API can be found \ref mxt_group "here".
- *
- * \section deviceinfo Device Info
- * All UC3 and Xmega devices with a TWI module can be used with this component
- *
- * \section exampledescription Description of the example
- * This example will read data from the connected maXTouch explained board
- * over TWI. This data is then processed and sent over a USART data line
- * to the board controller. The board controller will create a USB CDC class
- * object on the host computer and repeat the incoming USART data from the
- * main controller to the host. On the host this object should appear as a
- * serial port object (COMx on windows, /dev/ttyxxx on your chosen Linux flavour).
- *
- * Connect a terminal application to the serial port object with the settings
- * Baud: 57600
- * Data bits: 8-bit
- * Stop bits: 1 bit
- * Parity: None
- *
- * \section compinfo Compilation Info
- * This software was written for the GNU GCC and IAR for AVR.
- * Other compilers may or may not work.
- *
- * \section contactinfo Contact Information
- * For further information, visit
- * <A href="http://www.atmel.com/">Atmel</A>.\n
- */
+* \mainpage
+*
+* \section intro Introduction
+* This simple example reads data from the maXTouch device and sends it over
+* USART as ASCII formatted text.
+*
+* \section files Main files:
+* - example_usart.c: maXTouch component USART example file
+* - conf_mxt.h: configuration of the maXTouch component
+* - conf_board.h: configuration of board
+* - conf_clock.h: configuration of system clock
+* - conf_example.h: configuration of example
+* - conf_sleepmgr.h: configuration of sleep manager
+* - conf_twim.h: configuration of TWI driver
+* - conf_usart_serial.h: configuration of USART driver
+*
+* \section apiinfo maXTouch low level component API
+* The maXTouch component API can be found \ref mxt_group "here".
+*
+* \section deviceinfo Device Info
+* All UC3 and Xmega devices with a TWI module can be used with this component
+*
+* \section exampledescription Description of the example
+* This example will read data from the connected maXTouch explained board
+* over TWI. This data is then processed and sent over a USART data line
+* to the board controller. The board controller will create a USB CDC class
+* object on the host computer and repeat the incoming USART data from the
+* main controller to the host. On the host this object should appear as a
+* serial port object (COMx on windows, /dev/ttyxxx on your chosen Linux flavour).
+*
+* Connect a terminal application to the serial port object with the settings
+* Baud: 57600
+* Data bits: 8-bit
+* Stop bits: 1 bit
+* Parity: None
+*
+* \section compinfo Compilation Info
+* This software was written for the GNU GCC and IAR for AVR.
+* Other compilers may or may not work.
+*
+* \section contactinfo Contact Information
+* For further information, visit
+* <A href="http://www.atmel.com/">Atmel</A>.\n
+*/
 /*
- * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
- */
+* Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
+*/
 
 #include <asf.h>
 #include <stdlib.h>
@@ -108,14 +108,14 @@ const uint32_t BUTTON_H = 150;
 const uint32_t BUTTON_BORDER = 2;
 const uint32_t BUTTON_X = ILI9488_LCD_WIDTH/2;
 const uint32_t BUTTON_Y = ILI9488_LCD_HEIGHT/2;
-	
+
 /************************************************************************/
 /* RTOS                                                                  */
 /************************************************************************/
 #define TASK_MXT_STACK_SIZE            (2*1024/sizeof(portSTACK_TYPE))
-#define TASK_MXT_STACK_PRIORITY        (tskIDLE_PRIORITY)  
+#define TASK_MXT_STACK_PRIORITY        (tskIDLE_PRIORITY)
 
-#define TASK_LCD_STACK_SIZE            (2*1024/sizeof(portSTACK_TYPE))
+#define TASK_LCD_STACK_SIZE            (4*1024/sizeof(portSTACK_TYPE))
 #define TASK_LCD_STACK_PRIORITY        (tskIDLE_PRIORITY)
 
 /** Reference voltage for AFEC,in mv. */
@@ -132,48 +132,82 @@ volatile bool g_is_conversion_done = false;
 volatile uint32_t g_ul_value = 20;
 
 /* Canal do sensor de temperatura */
-#define AFEC_CHANNEL_TEMP_SENSOR 11
+#define AFEC_CHANNEL_TEMP_SENSOR 0
 
 typedef struct {
-  uint x;
-  uint y;
+	uint x;
+	uint y;
 } touchData;
 
 QueueHandle_t xQueueTouch;
 QueueHandle_t xQueueTem;
-QueueHandle_t xQueueAna;
+QueueHandle_t xQueuePWM;
 
 SemaphoreHandle_t xSemaphore;
+SemaphoreHandle_t xSemaphore2;
+
+#define PIO_PWM_0 PIOA
+#define ID_PIO_PWM_0 ID_PIOA
+#define MASK_PIN_PWM_0 (1 << 0)
+
+/** PWM frequency in Hz */
+#define PWM_FREQUENCY      1000
+/** Period value of PWM output waveform */
+#define PERIOD_VALUE       100
+/** Initial duty cycle value */
+#define INIT_DUTY_VALUE    0
+
+/** PWM channel instance for LEDs */
+pwm_channel_t g_pwm_channel_led;
+
+volatile uint16_t duty = 0;
+
+#define BUT1_PIO_ID			  ID_PIOD
+#define BUT1_PIO			  PIOD
+#define BUT1_PIN			  28u
+#define BUT1_PIN_MASK		  (1 << BUT1_PIN)
+#define BUT1_DEBOUNCING_VALUE 79
+
+#define BUT2_PIO_ID			  ID_PIOC
+#define BUT2_PIO			  PIOC
+#define BUT2_PIN			  31u
+#define BUT2_PIN_MASK		  (1 << BUT2_PIN)
+#define BUT2_DEBOUNCING_VALUE 79
+
+#define BUT3_PIO_ID			  ID_PIOA
+#define BUT3_PIO			  PIOA
+#define BUT3_PIN			  19u
+#define BUT3_PIN_MASK		  (1 << BUT3_PIN)
+#define BUT3_DEBOUNCING_VALUE 79
 
 /************************************************************************/
 /* RTOS hooks                                                           */
 /************************************************************************/
-
 /**
- * \brief Called if stack overflow during execution
- */
+* \brief Called if stack overflow during execution
+*/
 extern void vApplicationStackOverflowHook(xTaskHandle *pxTask,
-		signed char *pcTaskName)
+signed char *pcTaskName)
 {
 	printf("stack overflow %x %s\r\n", pxTask, (portCHAR *)pcTaskName);
 	/* If the parameters have been corrupted then inspect pxCurrentTCB to
-	 * identify which task has overflowed its stack.
-	 */
+	* identify which task has overflowed its stack.
+	*/
 	for (;;) {
 	}
 }
 
 /**
- * \brief This function is called by FreeRTOS idle task
- */
+* \brief This function is called by FreeRTOS idle task
+*/
 extern void vApplicationIdleHook(void)
 {
 	pmc_sleep(SAM_PM_SMODE_SLEEP_WFI);
 }
 
 /**
- * \brief This function is called by FreeRTOS each tick
- */
+* \brief This function is called by FreeRTOS each tick
+*/
 extern void vApplicationTickHook(void)
 {
 }
@@ -194,7 +228,6 @@ extern void vApplicationMallocFailedHook(void)
 /* init                                                                 */
 /************************************************************************/
 
-
 static void configure_lcd(void){
 	/* Initialize display parameter */
 	g_ili9488_display_opt.ul_width = ILI9488_LCD_WIDTH;
@@ -207,13 +240,13 @@ static void configure_lcd(void){
 }
 
 /**
- * \brief Set maXTouch configuration
- *
- * This function writes a set of predefined, optimal maXTouch configuration data
- * to the maXTouch Xplained Pro.
- *
- * \param device Pointer to mxt_device struct
- */
+* \brief Set maXTouch configuration
+*
+* This function writes a set of predefined, optimal maXTouch configuration data
+* to the maXTouch Xplained Pro.
+*
+* \param device Pointer to mxt_device struct
+*/
 static void mxt_init(struct mxt_device *device)
 {
 	enum status_code status;
@@ -260,47 +293,47 @@ static void mxt_init(struct mxt_device *device)
 
 	/* Initialize the maXTouch device */
 	status = mxt_init_device(device, MAXTOUCH_TWI_INTERFACE,
-			MAXTOUCH_TWI_ADDRESS, MAXTOUCH_XPRO_CHG_PIO);
+	MAXTOUCH_TWI_ADDRESS, MAXTOUCH_XPRO_CHG_PIO);
 	Assert(status == STATUS_OK);
 
 	/* Issue soft reset of maXTouch device by writing a non-zero value to
-	 * the reset register */
+	* the reset register */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_COMMANDPROCESSOR_T6, 0)
-			+ MXT_GEN_COMMANDPROCESSOR_RESET, 0x01);
+	MXT_GEN_COMMANDPROCESSOR_T6, 0)
+	+ MXT_GEN_COMMANDPROCESSOR_RESET, 0x01);
 
 	/* Wait for the reset of the device to complete */
 	delay_ms(MXT_RESET_TIME);
 
 	/* Write data to configuration registers in T7 configuration object */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_POWERCONFIG_T7, 0) + 0, 0x20);
+	MXT_GEN_POWERCONFIG_T7, 0) + 0, 0x20);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_POWERCONFIG_T7, 0) + 1, 0x10);
+	MXT_GEN_POWERCONFIG_T7, 0) + 1, 0x10);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_POWERCONFIG_T7, 0) + 2, 0x4b);
+	MXT_GEN_POWERCONFIG_T7, 0) + 2, 0x4b);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_POWERCONFIG_T7, 0) + 3, 0x84);
+	MXT_GEN_POWERCONFIG_T7, 0) + 3, 0x84);
 
 	/* Write predefined configuration data to configuration objects */
 	mxt_write_config_object(device, mxt_get_object_address(device,
-			MXT_GEN_ACQUISITIONCONFIG_T8, 0), &t8_object);
+	MXT_GEN_ACQUISITIONCONFIG_T8, 0), &t8_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-			MXT_TOUCH_MULTITOUCHSCREEN_T9, 0), &t9_object);
+	MXT_TOUCH_MULTITOUCHSCREEN_T9, 0), &t9_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-			MXT_SPT_CTE_CONFIGURATION_T46, 0), &t46_object);
+	MXT_SPT_CTE_CONFIGURATION_T46, 0), &t46_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-			MXT_PROCI_SHIELDLESS_T56, 0), &t56_object);
+	MXT_PROCI_SHIELDLESS_T56, 0), &t56_object);
 
 	/* Issue recalibration command to maXTouch device by writing a non-zero
-	 * value to the calibrate register */
+	* value to the calibrate register */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-			MXT_GEN_COMMANDPROCESSOR_T6, 0)
-			+ MXT_GEN_COMMANDPROCESSOR_CALIBRATE, 0x01);
+	MXT_GEN_COMMANDPROCESSOR_T6, 0)
+	+ MXT_GEN_COMMANDPROCESSOR_CALIBRATE, 0x01);
 }
 
 /************************************************************************/
-/* funcoes                                                              */
+/* DRAW                                                             */
 /************************************************************************/
 
 void font_draw_text(tFont *font, const char *text, int x, int y, int spacing) {
@@ -338,28 +371,34 @@ void draw_termo(void) {
 	ili9488_draw_pixmap(0,90,termometro.width, termometro.height+2, termometro.data);
 }
 
-void draw_temp(uint32_t temperatura){
-	char buffer[200];
-	sprintf(buffer, "%3d", temperatura);
-	font_draw_text(&digital52, buffer, termometro.width + 5, 95, 1);
-	//font_draw_text(&digital52, "Celsius", termometro.width + 56, 95, 1);
+void draw_potencia(uint32_t potencia){
+	char buffer[4];
+	sprintf(buffer, "%3d", potencia);
+	font_draw_text(&digital52, buffer, ar.width + 5, 305, 1);
+	font_draw_text(&digital52, "%", ar.width + 125,305, 1);
 }
 
-void draw_button(uint32_t clicked) {
-	static uint32_t last_state = 255; // undefined
-	if(clicked == last_state) return;
-	
-	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
-	ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2, BUTTON_Y-BUTTON_H/2, BUTTON_X+BUTTON_W/2, BUTTON_Y+BUTTON_H/2);
-	if(clicked) {
-		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_TOMATO));
-		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y+BUTTON_H/2-BUTTON_BORDER);
-	} else {
-		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_GREEN));
-		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y-BUTTON_H/2+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y-BUTTON_BORDER);
-	}
-	last_state = clicked;
+void draw_pwm(int32_t pwm){
+	char buffer[5];
+	sprintf(buffer, "%3d", pwm);
+	font_draw_text(&digital52, buffer, termometro.width + 5, 145, 1);
+	font_draw_text(&digital52, "PWM", termometro.width + 125, 145, 1);
 }
+
+void draw_temp(uint32_t temperatura){
+	char buffer[4];
+	sprintf(buffer, "%3d", temperatura);
+	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_WHITE));
+	ili9488_draw_filled_rectangle(termometro.width + 5,95, termometro.width + 175 ,95+49);
+	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
+	font_draw_text(&digital52, buffer, termometro.width + 5, 95, 1);
+	font_draw_text(&digital52, "C", termometro.width + 125, 95, 1);
+}
+
+
+/************************************************************************/
+/* funcoes                                                              */
+/************************************************************************/
 
 uint32_t convert_axis_system_x(uint32_t touch_y) {
 	// entrada: 4096 - 0 (sistema de coordenadas atual)
@@ -373,14 +412,38 @@ uint32_t convert_axis_system_y(uint32_t touch_x) {
 	return ILI9488_LCD_HEIGHT*touch_x/4096;
 }
 
-void update_screen(uint32_t tx, uint32_t ty) {
-	if(tx >= BUTTON_X-BUTTON_W/2 && tx <= BUTTON_X + BUTTON_W/2) {
-		if(ty >= BUTTON_Y-BUTTON_H/2 && ty <= BUTTON_Y) {
-			//draw_button(1);
-		} else if(ty > BUTTON_Y && ty < BUTTON_Y + BUTTON_H/2) {
-			//draw_button(0);
-		}
-	}
+void PWM0_init(uint channel, uint duty){
+	/* Enable PWM peripheral clock */
+	pmc_enable_periph_clk(ID_PWM0);
+
+	/* Disable PWM channels for LEDs */
+	pwm_channel_disable(PWM0, PIN_PWM_LED0_CHANNEL);
+
+	/* Set PWM clock A as PWM_FREQUENCY*PERIOD_VALUE (clock B is not used) */
+	pwm_clock_t clock_setting = {
+		.ul_clka = PWM_FREQUENCY * PERIOD_VALUE,
+		.ul_clkb = 0,
+		.ul_mck = sysclk_get_peripheral_hz()
+	};
+	
+	pwm_init(PWM0, &clock_setting);
+
+	/* Initialize PWM channel for LED0 */
+	/* Period is left-aligned */
+	g_pwm_channel_led.alignment = PWM_ALIGN_CENTER;
+	/* Output waveform starts at a low level */
+	g_pwm_channel_led.polarity = PWM_HIGH;
+	/* Use PWM clock A as source clock */
+	g_pwm_channel_led.ul_prescaler = PWM_CMR_CPRE_CLKA;
+	/* Period value of output waveform */
+	g_pwm_channel_led.ul_period = PERIOD_VALUE;
+	/* Duty cycle value of output waveform */
+	g_pwm_channel_led.ul_duty = duty;
+	g_pwm_channel_led.channel = channel;
+	pwm_channel_init(PWM0, &g_pwm_channel_led);
+	
+	/* Enable PWM channels for LEDs */
+	pwm_channel_enable(PWM0, channel);
 }
 
 void mxt_handler(struct mxt_device *device, uint *x, uint *y)
@@ -390,12 +453,12 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 
 	/* Temporary touch event data struct */
 	struct mxt_touch_event touch_event;
-  
-  /* first touch only */
-  uint first = 0;
+	
+	/* first touch only */
+	uint first = 0;
 
 	/* Collect touch events and put the data in a string,
-	 * maximum 2 events at the time */
+	* maximum 2 events at the time */
 	do {
 
 		/* Read next next touch event in the queue, discard if read fails */
@@ -403,35 +466,32 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 			continue;
 		}
 		
-    /************************************************************************/
-    /* Envia dados via fila RTOS                                            */
-    /************************************************************************/
-    if(first == 0 ){
-      *x = convert_axis_system_x(touch_event.y);
-      *y = convert_axis_system_y(touch_event.x);
-      first = 1;
-    }
-    
+		/************************************************************************/
+		/* Envia dados via fila RTOS                                            */
+		/************************************************************************/
+		if(first == 0 ){
+			*x = convert_axis_system_x(touch_event.y);
+			*y = convert_axis_system_y(touch_event.x);
+			first = 1;
+		}
+		
 		i++;
 
 		/* Check if there is still messages in the queue and
-		 * if we have reached the maximum numbers of events */
+		* if we have reached the maximum numbers of events */
 	} while ((mxt_is_message_pending(device)) & (i < MAX_ENTRIES));
 }
 
-/************************************************************************/
-/* tasks                                                                */
-/************************************************************************/
 void AFEC_callback_t(void){
 	g_ul_value = afec_channel_get_value(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
 	xQueueSendFromISR( xQueueTem, &g_ul_value, 0);
 }
 
 static void config_ADC_TEMP(void){
-/*************************************
-   * Ativa e configura AFEC
-   *************************************/
-  /* Ativa AFEC - 0 */
+	/*************************************
+	* Ativa e configura AFEC
+	*************************************/
+	/* Ativa AFEC - 0 */
 	afec_enable(AFEC0);
 
 	/* struct de configuracao do AFEC */
@@ -447,7 +507,7 @@ static void config_ADC_TEMP(void){
 	afec_set_trigger(AFEC0, AFEC_TRIG_SW);
 
 	/* configura call back */
-	afec_set_callback(AFEC0, AFEC_INTERRUPT_EOC_11,	AFEC_callback_t, 4);
+	afec_set_callback(AFEC0, AFEC_INTERRUPT_EOC_0,	AFEC_callback_t, 6);
 
 	/*** Configuracao específica do canal AFEC ***/
 	struct afec_ch_config afec_ch_cfg;
@@ -458,8 +518,8 @@ static void config_ADC_TEMP(void){
 	/*
 	* Calibracao:
 	* Because the internal ADC offset is 0x200, it should cancel it and shift
-	 down to 0.
-	 */
+	down to 0.
+	*/
 	afec_channel_set_analog_offset(AFEC0, AFEC_CHANNEL_TEMP_SENSOR, 0x200);
 
 	/***  Configura sensor de temperatura ***/
@@ -473,88 +533,152 @@ static void config_ADC_TEMP(void){
 }
 
 static int32_t convert_adc_to_temp(int32_t ADC_value){
-
-  int32_t ul_vol;
-  int32_t ul_temp;
-
-  /*
-   * converte bits -> tensão (Volts)
-   */
-	ul_vol = ADC_value * VOLT_REF / (float) MAX_DIGITAL;
-
-  /*
-   * According to datasheet, The output voltage VT = 0.72V at 27C
-   * and the temperature slope dVT/dT = 2.33 mV/C
-   */
-  ul_temp = (ul_vol - 720)  * 100 / 233 + 27;
-  return(ul_temp);
+	return(ADC_value);
 }
 
+void button_Callback(void) {
+	xSemaphoreGiveFromISR(xSemaphore, 0);
+}
+
+void button_Callback2(void) {
+	xSemaphoreGiveFromISR(xSemaphore2, 0);
+}
+
+void io_init(void) {
+
+	pmc_enable_periph_clk(BUT1_PIO_ID);
+	pio_configure(BUT1_PIO, PIO_INPUT, BUT1_PIN_MASK,PIO_PULLUP | PIO_DEBOUNCE);
+
+	pmc_enable_periph_clk(BUT2_PIO_ID);
+	pio_configure(BUT2_PIO, PIO_INPUT, BUT2_PIN_MASK, PIO_PULLUP | PIO_DEBOUNCE);
+
+	pio_handler_set(BUT1_PIO, BUT1_PIO_ID, BUT1_PIN_MASK, PIO_IT_FALL_EDGE, button_Callback);
+	pio_handler_set(BUT2_PIO, BUT2_PIO_ID, BUT2_PIN_MASK, PIO_IT_FALL_EDGE, button_Callback2);
+	
+	NVIC_EnableIRQ(BUT1_PIO_ID);
+	NVIC_SetPriority(BUT1_PIO_ID, 6);
+	
+	NVIC_EnableIRQ(BUT2_PIO_ID);
+	NVIC_SetPriority(BUT2_PIO_ID, 6);
+	
+	pio_enable_interrupt(BUT2_PIO, BUT2_PIN_MASK);
+	pio_enable_interrupt(BUT1_PIO, BUT1_PIN_MASK);
+}
+
+/************************************************************************/
+/* tasks                                                                */
+/************************************************************************/
+
 void task_mxt(void){
-  
-  	struct mxt_device device; /* Device data container */
-  	mxt_init(&device);       	/* Initialize the mXT touch device */
-    touchData touch;          /* touch queue data type*/
-    
-  	while (true) {  
-		  /* Check for any pending messages and run message handler if any
-		   * message is found in the queue */
-		  if (mxt_is_message_pending(&device)) {
-		  	mxt_handler(&device, &touch.x, &touch.y);
-        xQueueSend( xQueueTouch, &touch, 0);           /* send mesage to queue */
-      }
-     vTaskDelay(100);
+	
+	struct mxt_device device; /* Device data container */
+	mxt_init(&device);       	/* Initialize the mXT touch device */
+	touchData touch;          /* touch queue data type*/
+	
+	while (true) {
+		/* Check for any pending messages and run message handler if any
+		* message is found in the queue */
+		if (mxt_is_message_pending(&device)) {
+			mxt_handler(&device, &touch.x, &touch.y);
+			xQueueSend( xQueueTouch, &touch, 0);           /* send mesage to queue */
+		}
+		vTaskDelay(100);
 	}
 }
 
 void task_afec(void){
 	
 	config_ADC_TEMP();
-	afec_channel_enable(AFEC0, AFEC_CHANNEL_TEMP_SENSOR);
-		
+	printf("\n-Task Afec Configurado");
+	
 	for (;;){
 		afec_start_software_conversion(AFEC0);
-		vTaskDelay(4000/ portTICK_PERIOD_MS);
+		vTaskDelay(1000);
 	}
 }
 
 void task_lcd(void){
-  xQueueTouch = xQueueCreate( 10, sizeof( touchData ) );
-  xQueueTem =	xQueueCreate( 10, sizeof( uint32_t ) );
-  
-  uint32_t t;
-  touchData touch;
-  
-  configure_lcd();
-  
-  draw_screen();
-  draw_sonec();
-  draw_termo();
-  draw_ar();
- 
-  
-   // Escreve HH:MM no LCD
-   font_draw_text(&digital52, "17:40", 0, 0, 1);
-   
-   font_draw_text(&digital52, "25", termometro.width + 5, 95, 1);
-   
-   font_draw_text(&digital52, "100%", ar.width + 5, 305, 1);
-   
-   // Linha
-   ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
-   ili9488_draw_filled_rectangle(0,80,ILI9488_LCD_WIDTH-1,82);
-  
-  
-    
-  while (true) {  
+	xQueueTouch = xQueueCreate( 10, sizeof( touchData ) );
+	xQueueTem =	xQueueCreate( 10, sizeof( uint32_t ) );
+	
+	xSemaphore = xSemaphoreCreateBinary();
+	xSemaphore2 = xSemaphoreCreateBinary();
+	
+	
+	uint32_t t = 25;
+	int32_t pot = 0;
+	int32_t d_cicle = 0;
+	
+	
+	configure_lcd();
+	
+	io_init();
+	
+	draw_screen();
+	draw_sonec();
+	draw_termo();
+	draw_ar();
+	
+	// Escreve HH:MM no LCD
+	font_draw_text(&digital52, "17:40", 0, 0, 1);
+	
+	
+	// Linha
+	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
+	ili9488_draw_filled_rectangle(0,80,ILI9488_LCD_WIDTH-1,82);
+	
+	while (true) {
 
-	 if (xQueueReceive( xQueueTem, &t, ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-		 //printf("\nRecebeu Temp -> %d", t);
-		 draw_temp(convert_adc_to_temp(t));
-	 }     
-  }	 
+		if (xQueueReceive( xQueueTem, &t, ( TickType_t )  100 / portTICK_PERIOD_MS)) {
+			t = convert_adc_to_temp(t)/100;
+						
+			if (t > 50) t = 50;
+			else if (t <= 0) t = 0;
+			
+			draw_temp(t);
+			
+			
+			printf("\n %d", pot);
+			
+			d_cicle = pot;
+			
+			draw_pwm(pot);
+			
+			xQueueSend(xQueuePWM, &d_cicle,0);
+		}
+		if (xSemaphoreTake(xSemaphore2, ( TickType_t )  100 / portTICK_PERIOD_MS)) {
+			pot += 5;
+			if (pot >= 100) pot = 100;
+			
+			draw_potencia(pot);
+		}
+		if (xSemaphoreTake(xSemaphore, ( TickType_t )  100 / portTICK_PERIOD_MS)) {
+			pot -= 5;
+			if (pot < 0) pot = 0;
+			draw_potencia(pot);
+		}
+		
+	
+
+	
+	}
 }
 
+void task_pwm(void){
+	xQueuePWM = xQueueCreate( 10, sizeof( int32_t ) );
+		
+	pmc_enable_periph_clk(ID_PIO_PWM_0);
+	pio_set_peripheral(PIO_PWM_0, PIO_PERIPH_A, MASK_PIN_PWM_0 );
+	
+	uint duty = 0;
+	PWM0_init(0, duty);
+	
+	while (true) {
+		if (xQueueReceive( xQueuePWM, &duty, ( TickType_t ) 100 / portTICK_PERIOD_MS)) {
+			pwm_channel_update_duty(PWM0, &g_pwm_channel_led, 100 - duty);
+		}
+	}
+}
 
 /************************************************************************/
 /* main                                                                 */
@@ -575,29 +699,33 @@ int main(void)
 	
 	/* Initialize stdio on USART */
 	stdio_serial_init(USART_SERIAL_EXAMPLE, &usart_serial_options);
-		
-  /* Create task to handler touch */
-  if (xTaskCreate(task_mxt, "mxt", TASK_MXT_STACK_SIZE, NULL, TASK_MXT_STACK_PRIORITY, NULL) != pdPASS) {
-    printf("Failed to create test led task\r\n");
-  }
-  
-  /* Create task to handler LCD */
-  if (xTaskCreate(task_lcd, "lcd", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
-    printf("Failed to create test led task\r\n");
-  }
-  
-  /* Create task to handler LCD */
-  if (xTaskCreate(task_afec, "afec", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
-	  printf("Failed to create test afec task\r\n");
-  }
+	printf("LIGOU");
+	
+	/* Create task to handler touch */
+	if (xTaskCreate(task_mxt, "mxt", TASK_MXT_STACK_SIZE, NULL, TASK_MXT_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create test led task\r\n");
+	}
+	
+	/* Create task to handler LCD */
+	if (xTaskCreate(task_lcd, "lcd", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create test led task\r\n");
+	}
+	
+	/* Create task to handler LCD */
+	if (xTaskCreate(task_afec, "afec", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create test afec task\r\n");
+	}
 
-  /* Start the scheduler. */
-  vTaskStartScheduler();
+	
+	if (xTaskCreate(task_pwm, "pwm", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create test adc task\r\n");
+		}/**/
 
-  while(1){
+	/* Start the scheduler. */
+	vTaskStartScheduler();
 
-  }
+	while(1){
 
-
+	}
 	return 0;
-}
+	}
