@@ -388,11 +388,22 @@ void draw_pwm(int32_t pwm){
 void draw_temp(uint32_t temperatura){
 	char buffer[4];
 	sprintf(buffer, "%3d", temperatura);
+	
+	// Limpar tela e escrever temperatura
 	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_WHITE));
 	ili9488_draw_filled_rectangle(termometro.width + 5,95, termometro.width + 175 ,95+49);
 	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
+	
 	font_draw_text(&digital52, buffer, termometro.width + 5, 95, 1);
 	font_draw_text(&digital52, "C", termometro.width + 125, 95, 1);
+	
+	// Temperatura Gráficamente
+	if (temperatura < 10) ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLUE));
+	else if (temperatura < 20) ili9488_set_foreground_color(COLOR_CONVERT(COLOR_GREEN));
+	else if (temperatura < 30) ili9488_set_foreground_color(COLOR_CONVERT(COLOR_YELLOW));
+	else if (temperatura < 35) ili9488_set_foreground_color(COLOR_CONVERT(COLOR_TOMATO));
+	else ili9488_set_foreground_color(COLOR_CONVERT(COLOR_RED));
+	ili9488_draw_filled_rectangle(termometro.width + 176,95, termometro.width + 226 , 95 + 49);
 }
 
 
